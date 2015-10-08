@@ -1,0 +1,20 @@
+{
+  "name": "jsreport-mongodb-provider",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "dependencies": {
+    "listener-collection": "0.0.2",
+    "mongodb": "2.0.26",
+    "q": "1.2.0",
+    "underscore": "1.8.3"
+  },
+  "author": "Jan Blaha",
+  "devDependencies": {
+    "mocha": "^2.3.3",
+    "should": "^7.1.0"
+  }
+}
