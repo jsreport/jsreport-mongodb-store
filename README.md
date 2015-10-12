@@ -1,5 +1,7 @@
 # jsreport-mongodb-store
 
+[![Build Status](https://travis-ci.org/jsreport/jsreport-mongodb-store.png?branch=master)](https://travis-ci.org/jsreport/jsreport-mongodb-store)
+
 [jsreport](http://jsreport.net/) extension adding support for storing templates and reports inside [mongodb](https://www.mongodb.org/).
 
 ##Installation
