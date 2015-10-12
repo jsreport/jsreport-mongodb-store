@@ -1,13 +1,17 @@
 {
   "name": "jsreport-mongodb-store",
   "version": "0.0.2",
-  "description": "",
+  "description": "jsreport extension adding support for storing report templates inside mongodb",
   "main": "index.js",
   "scripts": {
     "test": "mocha test"
   },
+  "keywords": [
+    "jsreport",
+    "mongodb"
+  ],
   "dependencies": {
-    "listener-collection": "0.0.2",
+    "listener-collection": "0.1.0",
     "mongodb": "2.0.26",
     "q": "1.2.0",
     "underscore": "1.8.3"
