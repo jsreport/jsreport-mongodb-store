@@ -17,13 +17,13 @@
   ],
   "dependencies": {
     "listener-collection": "0.1.0",
-    "mongodb": "2.0.26",
-    "q": "1.2.0",
+    "mongodb": "2.2.7",
+    "q": "1.4.1",
     "underscore": "1.8.3"
   },
   "author": "Jan Blaha",
   "devDependencies": {
-    "mocha": "^2.3.3",
-    "should": "^7.1.0"
+    "mocha": "3.0.2",
+    "should": "11.1.0"
   }
 }
