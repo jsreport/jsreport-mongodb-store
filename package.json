@@ -1,6 +1,6 @@
 {
   "name": "jsreport-mongodb-store",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "jsreport extension adding support for storing report templates inside mongodb",
   "main": "index.js",
   "homepage": "https://github.com/jsreport/jsreport-mongodb-store",
