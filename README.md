@@ -23,3 +23,11 @@ Then alter jsreport configuration with:
 ```
 
 Note that using mongodb GridFS is optional, you can keep using file system storage for reports when required. In this case change `blobStorage` value to `fileSystem`.
+
+You can also pass connection uri like this
+
+```js
+"connectionString": { 
+	"uri": "mongodb://db1.example.net,db2.example.net:2500/?replicaSet=test"
+}
+```
