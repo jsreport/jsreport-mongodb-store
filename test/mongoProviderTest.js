@@ -1,7 +1,6 @@
 require('should')
 var MongoProvider = require('../lib/provider')
 var connection = require('../lib/connection')
-var q = require('q')
 
 var model = {
   namespace: 'jsreport',
@@ -28,7 +27,7 @@ describe('mongoProvider', function () {
     return connection(connectionString, logger).then(function (db) {
       mongoProvider = new MongoProvider(model, logger, db)
       return mongoProvider.init().then(function () {
-        return q.ninvoke(mongoProvider.db, 'dropDatabase')
+        return mongoProvider.drop()
       })
     })
   })
