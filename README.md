@@ -28,7 +28,7 @@ You can also pass connection uri like this
 
 ```js
 "connectionString": { 
-        "name": "mongodb", 
-	"uri": "mongodb://db1.example.net,db2.example.net:2500/?replicaSet=test"
+  "name": "mongodb", 
+  "uri": "mongodb://db1.example.net,db2.example.net:2500/?replicaSet=test"
 }
 ```
