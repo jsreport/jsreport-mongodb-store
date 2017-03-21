@@ -4,7 +4,7 @@
 
 [jsreport](http://jsreport.net/) extension adding support for storing templates and reports inside [mongodb](https://www.mongodb.org/).
 
-##Installation
+## Installation
 
 > npm install jsreport-mongodb-store
 
