@@ -13,12 +13,14 @@ Then alter jsreport configuration with:
 ```js
 {
    ....
-   "connectionString": {
-      "name": "mongodb",
+   "store": {
+      "provider": "mongodb",
       "address": "127.0.0.1",
-	  "databaseName" : "std"
+	    "databaseName" : "std"
    },
-   "blobStorage": "gridFS",
+   "blobStorage": {
+     "provider": "gridFS"
+   }
 }
 ```
 
@@ -29,8 +31,8 @@ Note that both features are optional, you can use mongodb GridFS only for report
 You can also pass connection uri like this
 
 ```js
-"connectionString": {
-  "name": "mongodb",
+"store": {
+  "provider": "mongodb",
   "uri": "mongodb://db1.example.net,db2.example.net:2500/?replicaSet=test"
 }
 ```
