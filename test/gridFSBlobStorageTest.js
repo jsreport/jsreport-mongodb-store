@@ -1,18 +1,20 @@
 require('should')
 const jsreport = require('jsreport-core')
 
-describe('grid FS', function () {
+describe('grid FS', () => {
   let reporter
 
   beforeEach(async () => {
     reporter = jsreport({
-      connectionString: {
-        'name': 'mongodb',
-        'address': '127.0.0.1',
-        'port': 27017,
-        'databaseName': 'test'
+      store: {
+        provider: 'mongodb',
+        address: '127.0.0.1',
+        port: 27017,
+        databaseName: 'test'
       },
-      blobStorage: 'gridFS'
+      blobStorage: {
+        provider: 'gridFS'
+      }
     })
     reporter.use(require('../')())
 
@@ -20,5 +22,7 @@ describe('grid FS', function () {
     return reporter.documentStore.drop()
   })
 
-  jsreport.tests.blobStorage(() => reporter.blobStorage)
+  afterEach(() => reporter.close())
+
+  jsreport.tests.blobStorage()(() => reporter.blobStorage)
 })

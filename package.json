@@ -9,7 +9,7 @@
     "url": "git@github.com:jsreport/jsreport-mongodb-store.git"
   },
   "scripts": {
-    "test": "mocha test --exit && standard"
+    "test": "mocha test && standard"
   },
   "keywords": [
     "jsreport",
@@ -22,18 +22,18 @@
     }
   },
   "dependencies": {
-    "mongodb": "3.0.2"
+    "mongodb": "3.0.6"
   },
   "devDependencies": {
-    "eslint": "4.17.0",
-    "eslint-config-standard": "11.0.0-beta.0",
+    "eslint": "4.19.1",
+    "eslint-config-standard": "11.0.0",
     "jsreport-core": "jsreport/jsreport-core#2.0.0-beta",
-    "mocha": "5.0.0",
+    "mocha": "5.0.5",
     "should": "13.2.1",
-    "standard": "10.0.3"
+    "standard": "11.0.1"
   },
   "author": "Jan Blaha",
   "engines": {
-    "node": ">=8.0"
+    "node": ">=8.9"
   }
 }
