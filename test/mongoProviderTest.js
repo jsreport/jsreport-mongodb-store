@@ -1,95 +1,54 @@
-require('should')
-var MongoProvider = require('../lib/provider')
-var connection = require('../lib/connection')
+const should = require('should')
+const jsreport = require('jsreport-core')
 
-var model = {
-  namespace: 'jsreport',
-  entityTypes: {
-    'UserType': {
-      '_id': { 'type': 'Edm.String', key: true },
-      'name': { 'type': 'Edm.String' }
-    }
-  },
-  entitySets: {
-    'users': {
-      entityType: 'jsreport.UserType'
-    }
-  }
-}
+describe('mongodb store', () => {
+  let reporter
 
-var connectionString = { 'name': 'mongodb', 'address': '127.0.0.1', 'port': 27017, 'databaseName': 'test' }
-var logger = { info: function () {}, error: function () {}, warn: function () {}, debug: function () {} }
+  beforeEach(async () => {
+    reporter = jsreport({ store: { provider: 'mongodb' } })
+    reporter.use(require('../')({ 'address': '127.0.0.1', 'port': 27017, 'databaseName': 'test' }))
 
-describe('mongoProvider', function () {
-  var mongoProvider
-
-  beforeEach(function () {
-    return connection(connectionString, logger).then(function (db) {
-      mongoProvider = new MongoProvider(model, logger, db)
-      return mongoProvider.init().then(function () {
-        return mongoProvider.drop()
+    reporter.use(() => {
+      reporter.documentStore.registerEntityType('TestType', {
+        _id: { type: 'Edm.String', key: true },
+        name: { type: 'Edm.String', key: true, publicKey: true },
+        content: { type: 'Edm.Binary', document: { extension: 'html', content: true } }
       })
+      reporter.documentStore.registerEntitySet('test', { entityType: 'jsreport.TestType' })
     })
+    await reporter.init()
   })
 
-  it('insert and query', function (done) {
-    mongoProvider.collection('users').insert({ name: 'test' })
-      .then(function () {
-        return mongoProvider.collection('users').find({ name: 'test' }).then(function (res) {
-          res.length.should.be.eql(1)
-          done()
-        })
-      }).catch(done)
-  })
+  afterEach(() => reporter.close())
 
-  it('insert, update, query', function (done) {
-    mongoProvider.collection('users').insert({ name: 'test' })
-      .then(function () {
-        return mongoProvider.collection('users').update({ name: 'test' }, { $set: { name: 'test2' } })
-      }).then(function () {
-        return mongoProvider.collection('users').find({ name: 'test2' }).then(function (res) {
-          res.length.should.be.eql(1)
-          done()
-        })
-      }).catch(done)
-  })
-
-  it('insert remove query', function (done) {
-    mongoProvider.collection('users').insert({ name: 'test' })
-      .then(function () {
-        return mongoProvider.collection('users').remove({ name: 'test' }, { $set: { name: 'test2' } })
-      }).then(function () {
-        return mongoProvider.collection('users').find({ name: 'test' }).then(function (res) {
-          res.length.should.be.eql(0)
-          done()
-        })
-      }).catch(done)
-  })
-
-  it('beforeInsertListeners should be invoked', function (done) {
-    mongoProvider.collection('users').beforeInsertListeners.add('test', function () {
-      done()
+  it('should return true node buffers', async () => {
+    await reporter.documentStore.collection('test').insert({
+      name: 'foo',
+      content: Buffer.from('foo')
     })
 
-    mongoProvider.collection('users').insert({ name: 'test' })
-      .then(function () {
-        return mongoProvider.collection('users').find({ name: 'test' })
-      }).catch(done)
+    const doc = await reporter.documentStore.collection('test').findOne({ name: 'foo' })
+    Buffer.isBuffer(doc.content).should.be.true()
   })
 
-  it('beforeRemoveListeners should be invoked', function (done) {
-    mongoProvider.collection('users').beforeRemoveListeners.add('test', function () {
-      done()
+  it('should return string instead of ObjectId from insert', async () => {
+    const doc = await reporter.documentStore.collection('test').insert({
+      name: 'foo',
+      content: Buffer.from('foo')
     })
 
-    mongoProvider.collection('users').remove({ name: 'test' }).catch(done)
+    doc._id.should.have.type('string')
   })
 
-  it('beforeUpdateListeners should be invoked', function (done) {
-    mongoProvider.collection('users').beforeUpdateListeners.add('test', function () {
-      done()
+  it('should remove entity by _id', async () => {
+    const doc = await reporter.documentStore.collection('test').insert({
+      name: 'foo'
     })
 
-    mongoProvider.collection('users').update({ name: 'test' }, { $set: { name: 'test2' } }).catch(done)
+    await reporter.documentStore.collection('test').remove({ _id: doc._id })
+    const loadedDoc = await reporter.documentStore.collection('test').findOne({ name: 'foo' })
+    should(loadedDoc).not.be.ok()
   })
+
+  jsreport.tests.documentStore()(() => reporter.documentStore)
 })
