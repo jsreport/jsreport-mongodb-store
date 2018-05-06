@@ -7,16 +7,17 @@ describe('grid FS', () => {
   beforeEach(async () => {
     reporter = jsreport({
       store: {
-        provider: 'mongodb',
-        address: '127.0.0.1',
-        port: 27017,
-        databaseName: 'test'
+        provider: 'mongodb'
       },
       blobStorage: {
         provider: 'gridFS'
       }
     })
-    reporter.use(require('../')())
+    reporter.use(require('../')({
+      address: '127.0.0.1',
+      port: 27017,
+      databaseName: 'test'
+    }))
 
     await reporter.init()
     return reporter.documentStore.drop()
