@@ -27,7 +27,7 @@
   "devDependencies": {
     "eslint": "4.19.1",
     "eslint-config-standard": "11.0.0",
-    "jsreport-core": "2.0.4",
+    "jsreport-core": "github:jsreport/jsreport-core",
     "mocha": "5.2.0",
     "should": "13.2.1",
     "standard": "11.0.1"
