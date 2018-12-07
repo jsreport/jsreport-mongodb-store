@@ -14,7 +14,7 @@ describe('mongodb store', () => {
         name: { type: 'Edm.String', key: true, publicKey: true },
         content: { type: 'Edm.Binary', document: { extension: 'html', content: true } }
       })
-      reporter.documentStore.registerEntitySet('test', { entityType: 'jsreport.TestType' })
+      reporter.documentStore.registerEntitySet('testing', { entityType: 'jsreport.TestType' })
     })
     await reporter.init()
   })
@@ -22,17 +22,17 @@ describe('mongodb store', () => {
   afterEach(() => reporter.close())
 
   it('should return true node buffers', async () => {
-    await reporter.documentStore.collection('test').insert({
+    await reporter.documentStore.collection('testing').insert({
       name: 'foo',
       content: Buffer.from('foo')
     })
 
-    const doc = await reporter.documentStore.collection('test').findOne({ name: 'foo' })
+    const doc = await reporter.documentStore.collection('testing').findOne({ name: 'foo' })
     Buffer.isBuffer(doc.content).should.be.true()
   })
 
   it('should return string instead of ObjectId from insert', async () => {
-    const doc = await reporter.documentStore.collection('test').insert({
+    const doc = await reporter.documentStore.collection('testing').insert({
       name: 'foo',
       content: Buffer.from('foo')
     })
@@ -41,12 +41,12 @@ describe('mongodb store', () => {
   })
 
   it('should remove entity by _id', async () => {
-    const doc = await reporter.documentStore.collection('test').insert({
+    const doc = await reporter.documentStore.collection('testing').insert({
       name: 'foo'
     })
 
-    await reporter.documentStore.collection('test').remove({ _id: doc._id })
-    const loadedDoc = await reporter.documentStore.collection('test').findOne({ name: 'foo' })
+    await reporter.documentStore.collection('testing').remove({ _id: doc._id })
+    const loadedDoc = await reporter.documentStore.collection('testing').findOne({ name: 'foo' })
     should(loadedDoc).not.be.ok()
   })
 
