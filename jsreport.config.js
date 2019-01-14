@@ -36,6 +36,7 @@ module.exports = {
               { type: 'array', items: { type: 'number' } }
             ]
           },
+          prefix: { type: 'string', default: '' },
           replicaSet: { type: 'string' },
           ssl: { type: 'boolean' }
         }
