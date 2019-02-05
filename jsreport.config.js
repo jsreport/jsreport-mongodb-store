@@ -38,7 +38,8 @@ module.exports = {
           },
           prefix: { type: 'string', default: '' },
           replicaSet: { type: 'string' },
-          ssl: { type: 'boolean' }
+          ssl: { type: 'boolean' },
+          connectOptions: { type: 'object', description: 'Any option that can be passed to the internal mongodb connection' }
         }
       }
     }

@@ -22,13 +22,14 @@ Then alter jsreport configuration with:
   "extensions": {
     "mongodb-store": {
       "address": "127.0.0.1",
-	    "databaseName" : "std"
+	    "databaseName" : "std",
+      "connectOptions": { /* any custom mongodb connection options can be passed here */ }
     }
   }
 }
 ```
 
-Connection options can be passed as values of `mongodb-store` key in config too.
+Connection options can be passed as values of `mongodb-store` key in config or as values inside the `connectOptions` key.
 
 Note that both features are optional, you can use mongodb GridFS only for reports storage and fs-store (or any other store) for storing templates, also you can keep using file system storage for reports when required. In this case change `blobStorage` value to `fileSystem`.
 
@@ -44,3 +45,4 @@ You can also pass connection uri like this
   }
 }
 ```
+00
