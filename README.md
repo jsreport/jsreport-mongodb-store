@@ -22,8 +22,9 @@ Then alter jsreport configuration with:
   "extensions": {
     "mongodb-store": {
       "address": "127.0.0.1",
-	    "databaseName" : "std",
-      "connectOptions": { /* any custom mongodb connection options can be passed here */ }
+      "databaseName" : "std",
+      "connectOptions": { /* any custom mongodb connection options can be passed here */ },
+      "prefix": "jsreport_" // optional prefix for jsreport collections, defaults to no prefix
     }
   }
 }
@@ -45,4 +46,4 @@ You can also pass connection uri like this
   }
 }
 ```
-00
+
