@@ -1,6 +1,8 @@
 const should = require('should')
 const jsreport = require('jsreport-core')
 
+const RUN_TRANSACTIONS_TESTS = process.env.RUN_TRANSACTIONS_TESTS != null
+
 describe('mongodb store', () => {
   common()
 })
@@ -22,13 +24,13 @@ function common (prefix) {
     }
 
     const replicaOpts = {
-      address: ['127.0.0.1', '127.0.0.1', '127.0.0.1'],
-      port: [27017, 27018, 27019],
+      address: ['127.0.0.1'],
+      port: [27017],
       databaseName: 'test',
       replicaSet: 'rs'
     }
 
-    const extOptions = process.env.USE_REPLICA != null ? replicaOpts : localOpts
+    const extOptions = RUN_TRANSACTIONS_TESTS ? replicaOpts : localOpts
 
     if (prefix) {
       extOptions.prefix = 'jsreport_'
@@ -96,6 +98,6 @@ function common (prefix) {
       should(loadedDoc).not.be.ok()
     })
 
-    jsreport.tests.documentStore()(() => reporter.documentStore)
+    jsreport.tests.documentStore()(() => reporter.documentStore, RUN_TRANSACTIONS_TESTS)
   }
 }
