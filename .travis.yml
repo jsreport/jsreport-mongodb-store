@@ -1,4 +1,11 @@
 language: node_js
-services: mongodb
-node_js:  
+node_js:
   - "8"
+env:
+  - MONGODB_VERSION=^4.2.0
+  - MONGODB_TOPOLOGY=replicaset
+  - MONGODB_PORT=27017
+install:
+  - npm install -g mongodb-runner
+  - mongodb-runner start --name=rs
+script: npm run test-with-transactions
