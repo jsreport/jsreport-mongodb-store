@@ -15,11 +15,20 @@ function common (prefix) {
   beforeEach(async () => {
     reporter = jsreport({ store: { provider: 'mongodb' } })
 
-    const extOptions = {
-      'address': '127.0.0.1',
-      'port': 27017,
-      'databaseName': 'test'
+    const localOpts = {
+      address: '127.0.0.1',
+      port: 27017,
+      databaseName: 'test'
     }
+
+    const replicaOpts = {
+      address: ['127.0.0.1', '127.0.0.1', '127.0.0.1'],
+      port: [27017, 27018, 27019],
+      databaseName: 'test',
+      replicaSet: 'rs'
+    }
+
+    const extOptions = process.env.USE_REPLICA != null ? replicaOpts : localOpts
 
     if (prefix) {
       extOptions.prefix = 'jsreport_'
@@ -33,9 +42,15 @@ function common (prefix) {
         name: { type: 'Edm.String', key: true, publicKey: true },
         content: { type: 'Edm.Binary', document: { extension: 'html', content: true } }
       })
+
       reporter.documentStore.registerEntitySet('testing', { entityType: 'jsreport.TestType' })
+
+      jsreport.tests.documentStore().init(() => reporter.documentStore)
     })
+
     await reporter.init()
+
+    await jsreport.tests.documentStore().clean(() => reporter.documentStore)
   })
 
   afterEach(() => reporter.close())

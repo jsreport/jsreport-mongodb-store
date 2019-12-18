@@ -9,7 +9,7 @@
     "url": "git@github.com:jsreport/jsreport-mongodb-store.git"
   },
   "scripts": {
-    "test": "mocha test && standard"
+    "test": "mocha --timeout 15000 test && standard"
   },
   "keywords": [
     "jsreport",
@@ -31,7 +31,7 @@
     "eslint-plugin-node": "7.0.1",
     "eslint-plugin-promise": "4.0.1",
     "eslint-plugin-standard": "4.0.0",
-    "jsreport-core": "2.5.0",
+    "jsreport-core": "github:jsreport/jsreport-core",
     "mocha": "5.2.0",
     "should": "13.2.3",
     "standard": "12.0.1"
