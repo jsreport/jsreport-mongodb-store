@@ -37,7 +37,7 @@ describe('grid FS', () => {
     return reporter.documentStore.drop()
   })
 
-  afterEach(() => reporter.close())
+  afterEach(() => reporter && reporter.close())
 
   jsreport.tests.blobStorage()(() => reporter.blobStorage)
 })

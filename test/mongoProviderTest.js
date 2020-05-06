@@ -55,7 +55,7 @@ function common (prefix) {
     await jsreport.tests.documentStore().clean(() => reporter.documentStore)
   })
 
-  afterEach(() => reporter.close())
+  afterEach(() => reporter && reporter.close())
 
   if (prefix) {
     it('collections should have prefix', async () => {
